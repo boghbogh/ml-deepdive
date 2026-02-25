@@ -7,6 +7,17 @@ Multi-page app showcasing end-to-end Snowflake ML capabilities:
 - Experiment Dashboard
 - Model Registry
 - Live Fraud Scoring
+
+IMPORTANT: This app requires the following packages (defined in packages.txt):
+- snowflake-ml-python>=1.27.0
+- pandas>=2.0.0
+- numpy>=1.24.0
+
+Deploy via SQL:
+  CREATE STREAMLIT BANKING_ML_DEMO.FRAUD_DETECTION.ML_DEEPDIVE__FRAUD_DETECTION_APP
+    ROOT_LOCATION = '@BANKING_ML_DEMO.FRAUD_DETECTION.NOTEBOOK_STAGE/ml-deepdive/streamlit'
+    MAIN_FILE = 'app.py'
+    QUERY_WAREHOUSE = 'ML_DEMO_WH';
 """
 
 import streamlit as st
@@ -172,6 +183,22 @@ elif page == "Feature Store":
         - View in **Snowsight > AI & ML > Feature Store**
         """)
 
+    except ImportError as ie:
+        st.error(f"Missing required package: {ie}")
+        st.markdown("""
+        **Package Installation Required:**
+        
+        The Streamlit app needs `snowflake-ml-python>=1.27.0` installed.
+        
+        **Fix:** Ensure the app was deployed with the `packages.txt` file that specifies:
+        ```
+        snowflake-ml-python>=1.27.0
+        pandas>=2.0.0
+        numpy>=1.24.0
+        ```
+        
+        Recreate the Streamlit app to apply the package configuration.
+        """)
     except Exception as e:
         st.error(f"Could not connect to Feature Store.\n\nError: {e}")
 
@@ -314,6 +341,22 @@ elif page == "Model Registry":
         - View at **Snowsight > AI & ML > Models**
         """)
 
+    except ImportError as ie:
+        st.error(f"Missing required package: {ie}")
+        st.markdown("""
+        **Package Installation Required:**
+        
+        The Streamlit app needs `snowflake-ml-python>=1.27.0` installed.
+        
+        **Fix:** Ensure the app was deployed with the `packages.txt` file that specifies:
+        ```
+        snowflake-ml-python>=1.27.0
+        pandas>=2.0.0
+        numpy>=1.24.0
+        ```
+        
+        Recreate the Streamlit app to apply the package configuration.
+        """)
     except Exception as e:
         st.error(f"Error loading registry: {e}")
 
